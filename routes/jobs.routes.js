@@ -15,8 +15,8 @@ const strip = (doc) => {
 
 // GET /api/jobs
 router.get("/", async (req, res) => {
-  const jobs = await Job.find().populate("company").populate("applications.applicant", "name email");
-  res.json({ success: true, count: jobs.length, data: jobs.map(strip) });
+  const jobs = await Job.find().select("-embedding").populate("company");
+  res.json({ success: true, count: jobs.length, data: jobs });
 });
 
 // GET /api/jobs/search?q=senior+react+developer&limit=10
